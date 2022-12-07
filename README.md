@@ -1,5 +1,5 @@
 # CSS_SERVER_ROTATION
-Custom map rotation for Counter Strike Source  servers to optimize space
+An attempt at optimizing disk space usage on Counter-Strike: Source servers by downloading the map files off a cloud service mid-match and keeping only 1 or 2 map files locally on the server machine. Once the next map file has been downloaded, waits until a specified amount of time runs out and restarts the server, deleting the previous match's map.
 
 ## TODO
 
