@@ -30,15 +30,16 @@ class Queue:
         while(next_name == current_name): # so current and next are always different
             next_name = random_map(origin)
 
-        shutil.copy(f"{origin}/{current_name}", f"./server_queue/{current_name}") #so names are constanst just change the content
-        shutil.copy(f"{origin}/{next_name}",f"./server_queue/{next_name}")
+        shutil.copy(f"{origin}/{current_name}", f"C:/steamcmd/css_ds/cstrike/maps/{current_name}") #so names are constanst just change the content
+        shutil.copy(f"{origin}/{next_name}",f"C:/steamcmd/css_ds/cstrike/maps/{next_name}")
         
 
-        self.current_map = f"./server_queue/{current_name}" #just path
-        self.next_map = f"./server_queue/{next_name}"
+        self.current_map = f"C:/steamcmd/css_ds/cstrike/maps/{current_name}" #just path
+        self.next_map = f"C:/steamcmd/css_ds/cstrike/maps/{next_name}"
 
     
     def switchMaps(self):
+
 
         previous = self.current_map # saving the previously played map so you dont play it twice
 
@@ -51,11 +52,12 @@ class Queue:
 
         next_path = self.current_map
 
-        while(f"./server_queue/{next_path}" == f"./server_queue/{self.current_map}" or f"./server_queue/{next_path}" == f"./server_queue/{previous}"): # fds gambiarra doida
+        while(f"C:/steamcmd/css_ds/cstrike/maps/{next_path}" == f"C:/steamcmd/css_ds/cstrike/maps/{self.current_map}" or f"C:/steamcmd/css_ds/cstrike/maps/{next_path}" == f"C:/steamcmd/css_ds/cstrike/maps/{previous}"): # fds gambiarra doida
             next_path = random_map(self.folder)
         
-        self.next_map = f"./server_queue/{next_path}"
+        self.next_map = f"C:/steamcmd/css_ds/cstrike/maps/{next_path}"
         shutil.copy(f"./{self.folder}/{next_path}", self.next_map)
+
 
 
 
@@ -74,17 +76,6 @@ class Queue:
 
 
  # random debug code
-
-queue = Queue('.\maps') 
-
-queue.showQueue()
-
-time.sleep(5)
-
-queue.switchMaps()
-
-queue.showQueue()
-
 
 
 
