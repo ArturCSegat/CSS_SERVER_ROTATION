@@ -1,8 +1,9 @@
 import os, time
 import random
 import shutil
+from map import Map
 
-def random_map(folder): #global for __init__ usage
+def random_map_name(folder): #global for __init__ usage
 
     map = random.choice(os.listdir(folder))
     return map
@@ -15,67 +16,63 @@ def clear_dir(folder):
 
 class Queue:
 
-    def __init__(self, folder):
+    def __init__(self, map_pool, queue_folder):
 
+        self.map_pool = map_pool #useful variable for future functions
+        self.queue_folder = queue_folder
 
+        current_map_name = random_map_name(map_pool)
 
-        self.folder = folder
-        
-        origin = folder # redundant lol??
+        self.current_map = Map(queue_folder, current_map_name) # generates map object for queue object
+        shutil.copy(f"{map_pool}/{current_map_name}", self.current_map.path) # creates the object generated in target folder
 
-        current_name = random_map(origin)
+        next_map_name = current_map_name
 
-        next_name = current_name
+        while(next_map_name == current_map_name): # this loops makes sure tha next_map != current_map
+            next_map_name = random_map_name(map_pool)
 
-        while(next_name == current_name): # so current and next are always different
-            next_name = random_map(origin)
-
-        shutil.copy(f"{origin}/{current_name}", f"C:/steamcmd/css_ds/cstrike/maps/{current_name}") #so names are constanst just change the content
-        shutil.copy(f"{origin}/{next_name}",f"C:/steamcmd/css_ds/cstrike/maps/{next_name}")
-        
-
-        self.current_map = f"C:/steamcmd/css_ds/cstrike/maps/{current_name}" #just path
-        self.next_map = f"C:/steamcmd/css_ds/cstrike/maps/{next_name}"
+        self.next_map = Map(queue_folder, next_map_name)
+        shutil.copy(f"{map_pool}/{next_map_name}", self.next_map.path)
 
     
     def switchMaps(self):
 
 
-        previous = self.current_map # saving the previously played map so you dont play it twice
+        previous = self.current_map.name # saving the previously played map so you dont play it twice
 
-        shutil.copy(self.next_map, self.current_map) #switches content
+        shutil.copy(self.next_map.path, self.current_map.path) #switches content
         
-        os.remove(self.current_map)
+        os.remove(self.current_map.path) #clears the queue of last map
 
-        self.current_map = self.next_map # switches state in class
+        self.current_map = Map(self.next_map.dir, self.next_map.name) # copyes next_map into current_map
 
+        while(self.next_map.name == self.current_map.name or self.next_map.name == previous): # checks so that next_map is differente from both current_map and previous
+            self.next_map.name = random_map_name(self.map_pool) # generates just the name
 
-        next_path = self.current_map
+        self.next_map = Map(self.queue_folder, self.next_map.name) #new next_map
 
-        while(f"C:/steamcmd/css_ds/cstrike/maps/{next_path}" == f"C:/steamcmd/css_ds/cstrike/maps/{self.current_map}" or f"C:/steamcmd/css_ds/cstrike/maps/{next_path}" == f"C:/steamcmd/css_ds/cstrike/maps/{previous}"): # fds gambiarra doida
-            next_path = random_map(self.folder)
-        
-        self.next_map = f"C:/steamcmd/css_ds/cstrike/maps/{next_path}"
-        shutil.copy(f"./{self.folder}/{next_path}", self.next_map)
+        shutil.copy(f"{self.map_pool}/{self.next_map.name}", self.next_map.path) #aplies new next_map
 
 
 
 
+    def showQueue(self): # mainly debug purpose
+
+        print(f"The current map is {self.current_map.name} and the next one is {self.next_map.name}")
 
 
 
-       
-
-                    
-            
-        
-
-    def showQueue(self):
-
-        print(f"The current map is {self.current_map} and the next one is {self.next_map}")
 
 
- # random debug code
+# random debug code
+""" q = Queue("./maps", "./server_queue")
+
+q.showQueue()
+
+time.sleep(5)
+
+q.switchMaps()
+q.showQueue() """
 
 
 
