@@ -28,5 +28,5 @@ async def skip(ctx):
 
 
 
-bot.run("MTA1MDg3MjAzMTg0OTIxODIyOQ.GIRYd9.uwySGDswru96eV4v6VZG7IgtSRkE228Czs_lQ0")
+bot.run("")
 
