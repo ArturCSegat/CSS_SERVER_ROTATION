@@ -18,8 +18,8 @@ class Queue:
 
     def __init__(self, map_pool, queue_folder):
 
-        self.map_pool = map_pool #useful variable for future functions
-        self.queue_folder = queue_folder
+        self.map_pool = map_pool #useful variable for future functions, references where the files will be picked from
+        self.queue_folder = queue_folder # references where the files will be sent to
 
         current_map_name = random_map_name(map_pool)
 
@@ -47,7 +47,7 @@ class Queue:
         self.current_map = Map(self.next_map.dir, self.next_map.name) # copyes next_map into current_map
 
         while(self.next_map.name == self.current_map.name or self.next_map.name == previous): # checks so that next_map is differente from both current_map and previous
-            self.next_map.name = random_map_name(self.map_pool) # generates just the name
+            self.next_map.name = random_map_name(self.map_pool)[:-4] # generates just the name
 
         self.next_map = Map(self.queue_folder, self.next_map.name) #new next_map
 

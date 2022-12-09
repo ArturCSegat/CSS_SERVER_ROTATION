@@ -1,25 +1,21 @@
-import time
 import os
 from mapqueue import Queue
+class Server:
 
-# sets the queue to the maps folder. Don't worry, this isn't hardcoded like most other paths in here.       Either way, temporary
-fila = Queue(".\maps")
+    def __init__(self, max_players, match_duration, server_origin):
+        
+        self.server_origin = server_origin
+        self.max_players = max_players
+        self.match_duration = match_duration * 60
+        self.queue = Queue("./maps", f'{server_origin}/cstrike/maps')
 
-# test stuff
-print(f"CurrentMap: {fila.current_map}")
-print(f"NextMap: {fila.next_map}")
+    def startServer(self):
+        os.system(f"start {self.server_origin}\srcds.exe -console -game cstrike -secure +maxplayers {self.max_players} +map {self.queue.current_map.name}")
 
-#print(fila.current_map[32:-4])
-os.system(f"start C:\steamcmd\css_ds\srcds.exe -console -game cstrike -secure +maxplayers 22 +map {fila.current_map[32:-4]}")
-# the weird shit (32:-4) excludes the path section of the map file name and file extension with period included. Not very elegant
+    def nextMap(self):
+        self.queue.switchMaps()
+        self.startServer()
+    
+    def killServer(self):
+        os.system('taskkill /F /FI "WindowTitle eq  Counter-Strike: Source" /T') # finds a window with name "Counter-Strike: Source"
 
-# Does exactly what the function name says:
-def killandrestart():
-    os.system('taskkill /F /FI "WindowTitle eq  Counter-Strike: Source" /T') # finds a window with name "Counter-Strike: Source" (does not conflict with actual Counter Strike Source process)
-    fila.switchMaps() # forgot what this does but ACSEGAT told me to add it in so yeah
-    os.system(f"start C:\steamcmd\css_ds\srcds.exe -console -game cstrike -secure +maxplayers 22 +map {fila.current_map[32:-4]}") # restarts the server
-
-# while the script runs...
-while True:
-    time.sleep(25) # wait some amount of time then restarts the server ( you can change this to any period of time specified in seconds, kept 25 here for debugging purposes )
-    killandrestart() # bye bye server! tell people to rejoin
