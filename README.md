@@ -7,5 +7,6 @@ Also planned discord integration so players can change/request maps mid match.
 
 ## TODO
 
-* refactoring of server runner
-* discord integration
+* discord routine, so server are changed automaticaly, also should be restarted by switch maps
+
+* cloud integration, so to store maps on the cloud
