@@ -1,1 +1,1 @@
-python -u server.py
+python -u bot.py

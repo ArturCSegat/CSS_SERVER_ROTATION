@@ -48,7 +48,7 @@ class Queue:
 
         while(self.next_map.name == self.current_map.name or self.next_map.name == previous): # checks so that next_map is differente from both current_map and previous
             # the [:-4] int the while condition is so the names are compared without the file extentions
-            self.next_map = Map(self.next_map.dir, random_map_name())
+            self.next_map = Map(self.next_map.dir, random_map_name(self.map_pool))
 
 
 

@@ -13,9 +13,10 @@ class Server:
         os.system(f"start {self.server_origin}\srcds.exe -console -game cstrike -secure +maxplayers {self.max_players} +map {self.queue.current_map.name}")
 
     def nextMap(self):
+        self.killServer()
         self.queue.switchMaps()
         self.startServer()
     
     def killServer(self):
-        os.system('taskkill /F /FI "WindowTitle eq  Counter-Strike: Source" /T') # finds a window with name "Counter-Strike: Source"
+        os.system('taskkill /F /FI "WindowTitle eq  Pe Conco Server" /T') # finds a window with name "Counter-Strike: Source"
 
