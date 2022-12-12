@@ -4,6 +4,7 @@ class Map:
 
         self.dir = dir
         self.name = name[:-4] # Removes the file extension from the map
+        self.name_extension = name
         self.path = f"{dir}/{name}"
 
     

@@ -44,15 +44,15 @@ class Queue:
         
         os.remove(self.current_map.path) #clears the queue of last map
 
-        self.current_map = Map(self.next_map.dir, self.next_map.name) # copyes next_map into current_map
+        self.current_map = Map(self.next_map.dir, self.next_map.name_extension) # copyes next_map into current_map
 
-        while(self.next_map.name[:-4] == self.current_map.name or self.next_map.name == previous): # checks so that next_map is differente from both current_map and previous
+        while(self.next_map.name == self.current_map.name or self.next_map.name == previous): # checks so that next_map is differente from both current_map and previous
             # the [:-4] int the while condition is so the names are compared without the file extentions
-            self.next_map.name = random_map_name(self.map_pool) # generates just the name
+            self.next_map = Map(self.next_map.dir, random_map_name())
 
-        self.next_map = Map(self.queue_folder, self.next_map.name) #new next_map
 
-        shutil.copy(f"{self.map_pool}/{self.next_map.name}", self.next_map.path) #aplies new next_map
+
+        shutil.copy(f"{self.map_pool}/{self.next_map.name_extension}", self.next_map.path) #aplies new next_map
 
 
 
