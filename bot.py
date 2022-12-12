@@ -2,6 +2,10 @@ import discord
 from discord.ext import commands
 from server import Server
 
+intents = discord.Intents.all()
+intents.message_content = True
+
+ggez_id = 581159663345860619
 
 bot = commands.Bot(command_prefix=":", intents=None)
 
@@ -10,14 +14,12 @@ server = Server(10, 15, "C://steamcmd/css_ds")
 @bot.event
 async def on_ready():
     server.startServer()
-    channel = await bot.get_channel(581159663345860619) # ggez
-    await channel.send(f"Server ta on no mapa {server.queue.current_map.name}")
+    await bot.get_channel(ggez).send(f"Server ta on no mapa {server.queue.current_map.name}")
 
 @bot.event
 async def on_resumed():
     server.killServer()
-    channel = await bot.get_channel(581159663345860619) # ggez
-    await channel.send(f"matei o server")
+    await bot.get_channel(ggez).send(f"matei o server")
 
 
 @bot.command
